@@ -171,6 +171,9 @@ class GradeChecker(UISAuth):
         res = self.session.get(SERVICE_URL)
         res = self.session.post(FETCH_DATA_URL, 
                                 data={"start": str(FETCH_DATA_START), "length": str(FETCH_DATA_LENGTH)})
+        if res.status_code != 200:
+            print("获取成绩时出错\n" + res.text)
+            exit(1)
         new_data = JsonParser(res.text)
         prev_data = None
         with open('record.json', 'r') as f:
